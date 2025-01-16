@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+<head>
+  <title>Quản lý Học sinh</title>
+  <link rel="stylesheet" href="/css/role.css">
+  <!-- Link Icon-->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+  <div class="pagetitle">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/home}">Home</a></li>
+        <li class="breadcrumb-item">Quản lý học vấn</li>
+        <li class="breadcrumb-item">Học sinh</li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Thông báo thành công -->
+  <div th:if="${successMessage}" class="custom-alert custom-alert-success alert-dismissible fade show" role="alert">
+    <i class="bi bi-check-circle"></i>
+    <span th:text="${successMessage}"></span>
+  </div>
+
+  <!-- Thông báo lỗi -->
+  <div th:if="${errorMessage}" class="custom-alert custom-alert-delete alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-circle"></i>
+    <span th:text="${errorMessage}"></span>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <!-- Button thêm học sinh modal -->
+      <button type="button" class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#addStudentModal">
+        Thêm Học Sinh
+      </button>
+      <h5 class="card-title">Danh sách học sinh lớp
+        <span th:text="${tenLop}"></span>
+      </h5>
+
+      <!-- Table hiển thị danh sách học sinh -->
+      <table id="example" class="table">
+        <thead>
+        <tr>
+          <th scope="col">Mã học sinh</th>
+          <th scope="col">Họ và tên</th>
+          <th scope="col">Ngày sinh</th>
+          <th scope="col">Giới tính</th>
+          <th scope="col">Quê quán</th>
+          <th scope="col">Lớp học</th>
+          <th scope="col">Chức năng</th>
+          <th scope="col">Nhập điểm</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hocSinh : ${hocSinhs}">
+          <th scope="row" th:text="${hocSinh.mhs}"></th>
+          <td th:text="${hocSinh.tenHocSinh}"></td>
+          <td th:text="${hocSinh.ngaySinh}"></td>
+          <td th:text="${hocSinh.gioiTinh}"></td>
+          <td th:text="${hocSinh.queQuan}"></td>
+          <td th:text="${hocSinh.lopHoc.tenLop}"></td>
+          <td>
+            <!-- Button chỉnh sửa học sinh modal -->
+            <button type="button" class="btn btn-outline-primary editButton"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editStudentModal"
+                    th:attr="
+                                data-id=${hocSinh.mhs},
+                                data-hoTen=${hocSinh.tenHocSinh},
+                                data-ngaySinh=${hocSinh.ngaySinh},
+                                data-gioiTinh=${hocSinh.gioiTinh},
+                                data-queQuan=${hocSinh.queQuan}">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <!-- Button xóa học sinh -->
+            <a sec:authorize="hasAnyAuthority('MANAGE', 'ADMIN')" th:href="@{'/qlhocsinh/list/delete/' + ${hocSinh.mhs} + '?tenLop=' + ${hocSinh.lopHoc.tenLop} + '&namHoc=' + ${hocSinh.lopHoc.namHoc}}"
+               class="btn btn-outline-danger"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này?');">
+              <i class="bi bi-trash3"></i>
+            </a>
+
+          </td>
+          <td>
+            <a th:href="@{/bangdiem/{id}(id=${hocSinh.mhs})}" class="btn btn-outline-info">
+              <i class="bi bi-pencil"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal thêm học sinh -->
+  <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addStudentModalLabel">Thêm Học Sinh Mới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/qlhocsinh/list/add}" method="post">
+            <div class="row mb-3">
+              <label for="inputHoTen" class="col-sm-4 col-form-label">Họ và tên</label>
+              <div class="col-sm-8">
+                <input type="text" id="inputHoTen" class="form-control" name="hoTen" required>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputNgaySinh" class="col-sm-4 col-form-label">Ngày Sinh</label>
+              <div class="col-sm-8">
+                <input type="date" id="inputNgaySinh" class="form-control" name="ngaySinh" required>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="gioiTinh" class="col-sm-4 col-form-label">Giới tính</label>
+              <div class="col-sm-8">
+                <select class="form-select" id="gioiTinh" name="gioiTinh" required>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="className" class="col-sm-4 col-form-label">Lớp</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="className" name="tenLop" required pattern="[A-Za-z0-9 ]{1,50}"
+                       title="Tên lớp không hợp lệ!" th:value="${tenLop}" readonly>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="namHoc" class="col-sm-4 col-form-label">Năm học</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="namHoc" name="namHoc" required pattern="[A-Za-z0-9 ]{1,50}"
+                       title="Tên lớp không hợp lệ!" th:value="${namHoc}" readonly>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label for="inputQueQuan" class="col-sm-4 col-form-label">Quê Quán</label>
+              <div class="col-sm-8">
+                <input type="text" id="inputQueQuan" class="form-control" name="queQuan" required>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal chỉnh sửa học sinh -->
+  <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editStudentModalLabel">Chỉnh sửa Học Sinh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/qlhocsinh/list/edit}" method="post">
+            <input type="hidden" name="tenLop" th:value="${tenLop}">
+            <input type="hidden" name="namHoc" th:value="${namHoc}">
+            <input type="hidden" id="editMhs" name="mhs" />
+            <div class="row mb-3">
+              <label for="editHoTen" class="col-sm-4 col-form-label">Họ và tên</label>
+              <div class="col-sm-8">
+                <input type="text" id="editHoTen" class="form-control" name="tenHocSinh" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="editNgaySinh" class="col-sm-4 col-form-label">Ngày Sinh</label>
+              <div class="col-sm-8">
+                <input type="date" id="editNgaySinh" class="form-control" name="ngaySinh" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="editGioiTinh" class="col-sm-4 col-form-label">Giới tính</label>
+              <div class="col-sm-8">
+                <select class="form-select" id="editGioiTinh" name="gioiTinh" required>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="editQueQuan" class="col-sm-4 col-form-label">Quê Quán</label>
+              <div class="col-sm-8">
+                <input type="text" id="editQueQuan" class="form-control" name="queQuan" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nút In Bảng Điểm -->
+  <div class="d-flex justify-content-end mb-3">
+    <!-- Dùng th:href thay vì onclick với Thymeleaf -->
+    <a th:href="@{/qlhocsinh/print-bangdiem}" class="btn btn-success">
+      <i class="fa fa-print"></i> In Bảng Điểm
+    </a>
+  </div>
+
+  <script>
+  document.querySelectorAll('.editButton').forEach(button => {
+    button.addEventListener('click', function () {
+      const id = this.getAttribute('data-id');
+      const hoTen = this.getAttribute('data-hoTen');
+      const ngaySinh = this.getAttribute('data-ngaySinh');
+      const gioiTinh = this.getAttribute('data-gioiTinh');
+      const queQuan = this.getAttribute('data-queQuan');
+
+      document.getElementById('editMhs').value = id;
+      document.getElementById('editHoTen').value = hoTen;
+      document.getElementById('editNgaySinh').value = ngaySinh;
+      document.getElementById('editGioiTinh').value = gioiTinh;
+      document.getElementById('editQueQuan').value = queQuan;
+    });
+  });
+</script>
+</section>
+</body>
+</html>

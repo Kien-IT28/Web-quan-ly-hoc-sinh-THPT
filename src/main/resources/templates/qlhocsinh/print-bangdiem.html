@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Bảng Điểm</title>
+    <!-- Liên kết đến file CSS -->
+    <link rel="stylesheet" href="/css/print-bangdiem.css">
+    <!-- Link tới Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Nút quay lại trang trước -->
+<div class="back-button">
+    <button onclick="history.back()">
+        <!-- Thêm Icon Font Awesome -->
+        <i class="fas fa-arrow-left"></i>
+    </button>
+</div>
+
+<!-- Thông tin trường, lớp học, năm học -->
+<div class="header">
+    <!-- Align to the left -->
+    <div>
+        <p>Bộ GD&DT Tỉnh Hòa Bình</p>
+    </div>
+
+    <!-- Align to the right -->
+    <div style="text-align: center; float: right; width: 50%;">
+        <p>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+        <p>Độc lập - Tự do - Hạnh phúc</p>
+    </div>
+</div>
+
+<!-- Center the school's name and academic year -->
+<div class="centered-text">
+    <div>Trường PTDTNT THCS & THPT NGỌC SƠN</div>
+    <div>Năm học: 2024-2025</div>
+</div>
+
+<div class="table-container">
+    <!-- Bảng hiển thị điểm -->
+    <table id="bangDiemTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mã học sinh</th>
+            <th>Họ và tên</th>
+            <th>Môn Học</th>
+            <th>Điểm TB HKI</th>
+            <th>Điểm TB HKII</th>
+            <th>Điểm Cả Năm</th>
+        </tr>
+        </thead>
+        <tbody id="bangDiemBody">
+        <tr th:each="bangDiem : ${bangDiemList}">
+            <td th:text="${bangDiem.id}"></td>
+            <td th:text="${bangDiem.hocSinh.mhs}"></td>
+            <td th:text="${bangDiem.hocSinh.tenHocSinh}"></td>
+            <td th:text="${bangDiem.monHoc}"></td>
+            <td th:text="${bangDiem.diemTBHKI}"></td>
+            <td th:text="${bangDiem.diemTBHKII}"></td>
+            <td th:text="${bangDiem.diemCN}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div>
+        <p>Xác nhận của GVCN</p>
+    </div>
+    <div>
+        <p>Xác nhận của BGH</p>
+    </div>
+
+    <!-- Thêm phần thời gian ở bên phải -->
+    <div class="date-time">
+        <p id="current-date"></p>
+    </div>
+</div>
+
+<script>
+    // Function to display current date in "Ngọc Sơn, ngày [current date]" format
+    window.onload = function() {
+        const currentDate = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('vi-VN', options);
+        document.getElementById('current-date').textContent = "Ngọc Sơn, ngày " + formattedDate;
+
+        // Automatically sort and print the page
+        sortTable();
+        window.print();
+    };
+
+    // Function to sort the table based on student ID
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("bangDiemTable");
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[1]; // Mã học sinh (cột 2)
+                y = rows[i + 1].getElementsByTagName("TD")[1];
+                if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

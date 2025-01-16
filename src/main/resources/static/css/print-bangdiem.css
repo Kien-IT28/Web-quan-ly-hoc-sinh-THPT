@@ -1,0 +1,170 @@
+/* Main Body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+    color: #2d3e50;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    font-size: 16px;
+    color: #34495e;
+    font-weight: bold;
+    padding: 0 30px;
+}
+
+.header p {
+    margin: 5px;
+}
+
+.table-container {
+    margin: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}
+
+/* Footer styles */
+.footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 100px;
+    position: relative;
+}
+
+.footer .date-time {
+    padding: 20px;
+    position: absolute;
+    right: 30px; /* Căn chỉnh về bên phải */
+    bottom: 10px; /* Cách đáy footer một chút */
+    font-size: 14px;
+    color: #2d3e50;
+}
+
+/* Center text in the middle */
+.centered-text {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
+
+    .print-btn {
+        display: none;
+    }
+
+    .table-container {
+        box-shadow: none;
+        padding: 0;
+        border: none;
+    }
+
+    h1 {
+        font-size: 22px;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    th {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .footer {
+        margin-top: 40px;
+        font-size: 14px;
+    }
+}
+
+/* Styling for the back button container */
+.back-button {
+    text-align: left;
+    margin: 20px 0 0 20px;
+}
+
+/* Styling for the button */
+.back-button button {
+    background: linear-gradient(45deg, #44b4ea, #a55ee8); /* Gradient từ xanh sáng đến đỏ nhạt */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu và phóng to */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Khoảng cách giữa icon và text */
+}
+
+/* Hiệu ứng khi hover */
+.back-button button:hover {
+    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+    -4px -4px 6px 0 rgba(116, 125, 136, .5),
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+/* Hiệu ứng chỉ trượt mũi tên khi hover */
+.back-button button i {
+    font-size: 20px;
+    transition: transform 0.3s ease, margin-left 0.3s ease; /* Thêm hiệu ứng di chuyển mũi tên */
+}
+
+

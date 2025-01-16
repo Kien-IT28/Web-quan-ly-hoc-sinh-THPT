@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>Quản lý Chi Tiết Nhóm Nhân Viên</title>
+    <!-- Link Icon-->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <script>
+        function confirmDelete(event) {
+            if (!confirm("Bạn có chắc chắn muốn xóa không?")) {
+                event.preventDefault();
+            }
+        }
+    </script>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+    <div class="pagetitle">
+        <h1>Chi Tiết Nhóm Nhân Viên</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Chi Tiết Nhóm Nhân Viên</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Danh Sách Chi Tiết Nhóm Nhân Viên</h5>
+            <!-- Button thêm chi tiết nhóm nhân viên modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                Thêm Chi Tiết Nhóm Nhân Viên
+            </button>
+            <a href="/chitietnhomnhanvien/export" class="btn btn-success">
+                Xuất File Excel
+            </a>
+            <!-- Default Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên Nhân Viên</th>
+                    <th scope="col">Tên Nhóm Nhân Viên</th>
+                    <th scope="col">Chức năng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="chiTiet : ${chiTietNhomNhanViens}">
+                    <th scope="row" th:text="${chiTiet.id}">1</th>
+                    <td th:text="${chiTiet.nhanVien.tenNV}">Tên Nhân Viên A</td>
+                    <td th:text="${chiTiet.nhomNhanVien.tenNhom}">Tên Nhóm A</td>
+                    <td>
+                        <!-- Button chỉnh sửa chi tiết nhóm nhân viên modal -->
+                        <button type="button" class="btn btn-outline-primary editButton" data-bs-toggle="modal" data-bs-target="#editModal" th:attr="data-id=${chiTiet.id}, data-nhanVien=${chiTiet.nhanVien.id}, data-nhomNhanVien=${chiTiet.nhomNhanVien.id}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <!-- Button xóa chi tiết nhóm nhân viên -->
+                        <a th:href="@{'/chitietnhomnhanvien/delete/' + ${chiTiet.id}}" class="btn btn-outline-danger" onclick="confirmDelete(event)">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- End Default Table Example -->
+        </div>
+    </div>
+
+    <!-- Modal thêm chi tiết nhóm nhân viên -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Thêm Chi Tiết Nhóm Nhân Viên Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/chitietnhomnhanvien}" method="post">
+                        <div class="row mb-3">
+                            <label for="nhanVienSelectAdd" class="col-sm-5 col-form-label">Tên Nhân Viên</label>
+                            <div class="col-sm-15">
+                                <select id="nhanVienSelectAdd" class="form-select" name="nhanVien">
+                                    <option th:each="nhanVien : ${nhanViens}" th:value="${nhanVien.id}" th:text="${nhanVien.tenNV}">Nhân Viên A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nhomNhanVienSelectAdd" class="col-sm-5 col-form-label">Tên Nhóm Nhân Viên</label>
+                            <div class="col-sm-15">
+                                <select id="nhomNhanVienSelectAdd" class="form-select" name="nhomNhanVien">
+                                    <option th:each="nhom : ${nhomNhanViens}" th:value="${nhom.id}" th:text="${nhom.tenNhom}">Nhóm A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chỉnh sửa chi tiết nhóm nhân viên -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Chỉnh sửa Chi Tiết Nhóm Nhân Viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/chitietnhomnhanvien/update}" method="post">
+                        <input type="hidden" id="editId" name="id">
+                        <div class="row mb-3">
+                            <label for="nhanVienSelectEdit" class="col-sm-5 col-form-label">Tên Nhân Viên</label>
+                            <div class="col-sm-15">
+                                <select id="nhanVienSelectEdit" class="form-select" name="nhanVien">
+                                    <option th:each="nhanVien : ${nhanViens}" th:value="${nhanVien.id}" th:text="${nhanVien.tenNV}">Nhân Viên A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nhomNhanVienSelectEdit" class="col-sm-5 col-form-label">Tên Nhóm Nhân Viên</label>
+                            <div class="col-sm-15">
+                                <select id="nhomNhanVienSelectEdit" class="form-select" name="nhomNhanVien">
+                                    <option th:each="nhom : ${nhomNhanViens}" th:value="${nhom.id}" th:text="${nhom.tenNhom}">Nhóm A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

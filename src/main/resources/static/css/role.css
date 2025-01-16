@@ -1,0 +1,36 @@
+/* Hiệu ứng nhấp nháy */
+.custom-alert {
+    padding: 10px;
+    animation: blink 3s infinite;
+}
+
+/* Cấu hình màu sắc và icon cho thông báo thành công */
+.custom-alert-success {
+    color: #0f5132;
+}
+
+.custom-alert-success i {
+    color: #0f5132;
+}
+
+/* Cấu hình màu sắc và icon cho thông báo xóa */
+.custom-alert-delete {
+    color: #f10000;
+}
+
+.custom-alert-delete i {
+    color: #f10000;
+}
+
+/* Hiệu ứng nhấp nháy */
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

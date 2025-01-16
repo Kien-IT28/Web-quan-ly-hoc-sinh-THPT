@@ -1,0 +1,72 @@
+/* Cố định header */
+header {
+    position: fixed; /* Cố định header ở trên cùng */
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 10px 30px; /* Thêm lề 30px cho header */
+    background-color: #5d5d5d;
+    color: white; /* Màu chữ trắng */
+    z-index: 1000; /* Đảm bảo header nằm trên cùng của các phần tử khác */
+    border-bottom: 2px #4eeeee solid;
+}
+
+
+
+/* Thiết lập hàng cho header */
+.row {
+    display: flex;
+    justify-content: space-between; /* Giữa hàng */
+    align-items: center; /* Căn giữa hàng dọc */
+}
+
+/* Cột cho các phần tử trong header */
+.column1 {
+    font-weight: bold; /* In đậm chữ */
+    flex: 1; /* Chiếm không gian cho cột bên trái */
+}
+
+.column2 {
+    display: flex; /* Thiết lập cột bên phải thành flex */
+    align-items: center; /* Căn giữa hàng dọc */
+}
+
+/* Định dạng chữ trong cột 1 */
+.column1 p {
+    text-transform: uppercase; /* In hoa toàn bộ chữ */
+    margin: 0; /* Xóa khoảng cách mặc định của thẻ p */
+    letter-spacing: 2px; /* Giãn cách giữa các chữ */
+}
+
+/* Định dạng các liên kết trong header */
+li {
+    list-style: none; /* Bỏ dấu đầu dòng */
+    margin-left: 20px; /* Khoảng cách giữa các liên kết */
+}
+
+li a {
+    text-decoration: none; /* Xóa gạch chân */
+    color: white; /* Màu chữ trắng */
+    display: flex;
+    align-items: center; /* Căn giữa hàng dọc */
+    font-weight: bold; /* Đặt chữ thành in đậm */
+    letter-spacing: 1px; /* Giãn cách giữa các chữ */
+}
+
+.icon {
+    margin-right: 10px; /* Khoảng cách giữa biểu tượng và chữ */
+    font-size: 1.2em; /* Kích thước biểu tượng */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column; /* Chuyển thành cột trên màn hình nhỏ */
+        align-items: flex-start; /* Căn trái các phần tử */
+    }
+
+    .button {
+        margin-bottom: 10px; /* Khoảng cách dưới nút */
+    }
+}

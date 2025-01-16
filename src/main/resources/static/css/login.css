@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.content{
+    height: 390px;
+}
+
+.column2 ul{
+    display: flex;
+}
+
+/* Form Đăng Nhập */
+form {
+    background-color: white;
+    height: 455px;
+    margin: 150px auto;
+    width: 700px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formlogin {
+    display: flex;
+    border-radius: 10px;
+    width: 100%;
+    border: solid 2px rgb(0, 0, 0);
+    box-shadow: 5px 5px 10px #888888;
+}
+
+.imageleft img {
+    width: 250px;
+    height: 100%; /* Chiều cao bằng với form */
+    object-fit: cover; /* Giúp ảnh vừa vặn, cắt bớt nếu không tỷ lệ */
+    border-radius: 10px 0 0 10px;
+}
+
+.formloginreight {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* CSS cho các trường nhập liệu */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+/* Thay đổi con trỏ chuột thành màu đỏ */
+.input-username input:focus,
+.input-password input:focus {
+    cursor: pointer; /* Con trỏ nháy chuột */
+    border-color: red; /* Đổi màu viền khi nhập */
+}
+
+/* CSS cho các nút */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Thông báo lỗi */
+.error-message {
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+}
+
+/* CSS cho container nhập liệu */
+.input-container {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* CSS cho các nhóm nhập liệu với biểu tượng */
+.input-username, .input-password {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* CSS cho biểu tượng trong các trường nhập liệu */
+.input-username i, .input-password i {
+    margin-left: 10px;
+    color: #aaa;
+}
+
+/* CSS cho input trong các nhóm */
+.input-username input, .input-password input {
+    border: none;
+    outline: none;
+    padding: 8px;
+    width: 100%;
+    margin-left: 5px;
+    caret-color: rgb(255, 0, 48);
+}
+
+/* CSS cho biểu tượng con mắt */
+.input-password .fa-eye-slash {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #aaa;
+}
+/* CSS cho phần quên mật khẩu */
+.fogotpassword{
+    padding-left: 10px;
+}

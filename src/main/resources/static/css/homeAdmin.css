@@ -1,0 +1,13 @@
+.home {
+    display: flex;
+    margin-top: 45px;
+}
+
+.home > div:nth-child(1) {
+    flex: 0;
+}
+
+/* Đặt nội dung trang để chiếm phần còn lại */
+.home > div:nth-child(2) {
+    flex: 1;
+}

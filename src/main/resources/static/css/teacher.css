@@ -1,0 +1,328 @@
+/* Trang nội dung */
+.page-content {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+}
+
+/* Định dạng cho nội dung */
+.content {
+    flex: 1;
+    padding-top: 45px;
+    background-color: #fff;
+}
+
+/* Đặt chiều rộng tối đa cho thanh menu */
+.menu-bar {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #cecece;
+    border-bottom: 1px solid #ddd;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.menu-bar-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Nút bật/tắt menu */
+.button-toggle-menu {
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* Nhóm input tìm kiếm */
+.input-group {
+    display: flex;
+    align-items: center;
+    caret-color: rgb(255, 0, 48);
+}
+
+.form-control {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc; /* Đặt border 1px */
+    border-radius: 4px 0 0 4px;
+    width: 200px;
+    outline: none;
+}
+
+.input-search {
+    padding: 5px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Đảm bảo icon cài đặt không sát lề phải */
+.menu-bar-right {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Thêm khoảng cách với lề phải */
+}
+
+.menu-bar-right a {
+    font-size: 24px;
+    color: #333;
+    margin-left: 15px; /* Khoảng cách giữa các biểu tượng */
+    text-decoration: none;
+}
+
+
+
+
+/* Phần tiêu đề */
+h3 {
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Vùng chứa bảng */
+.table-responsive {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bảng giáo viên */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Đường viền và căn chỉnh */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Tiêu đề bảng */
+th {
+    text-align: center;
+    background-color: #138531;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Hiệu ứng khi hover vào hàng */
+tbody tr:hover {
+    background-color: #f1f9f1;
+}
+
+/* Phong cách cho các ô input */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+    padding: 6px;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #5dc272;
+}
+
+/* Phong cách cho nút */
+button.btn.update {
+    background-color: #5dc272;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button.btn.update:hover {
+    background-color: #4ba25a;
+}
+
+button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+button.btn-danger {
+    background-color: #e74c3c;
+    color: #1f1f1f;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Thong bao loi*/
+.Notification {
+
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*form them GV */
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Phong cách cho nhãn */
+.form-row label {
+    font-size: 0.9rem;
+    color: #333;
+    margin-right: 5px;
+}
+
+/* Phong cách cho ô input */
+.form-row input[type="text"],
+.form-row input[type="email"] {
+    padding: 8px;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.7);
+    transition: border-color 0.3s, background-color 0.3s;
+    outline: none;
+    width: 150px;
+}
+
+/* Hiệu ứng khi hover và focus */
+.form-row input[type="text"]:focus,
+.form-row input[type="email"]:focus {
+    border-bottom: 1px solid #5891ff;
+    background-color: #f0f8ff;
+}
+
+/* Nút lưu và hủy */
+.form-row input[type="submit"],
+.form-row button[type="button"] {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #5891ff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-row input[type="submit"]:hover {
+    background-color: #497dbf;
+}
+
+.form-row button[type="button"] {
+    background-color: #e74c3c;
+}
+
+.form-row button[type="button"]:hover {
+    background-color: #c0392b;
+}

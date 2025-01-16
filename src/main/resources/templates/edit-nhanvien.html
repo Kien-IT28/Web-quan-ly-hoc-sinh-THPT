@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa Nhân Viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Chỉnh sửa Nhân Viên</h3>
+                    <form th:action="@{'/nhanvien/update/' + ${nhanVien.id}}" th:object="${nhanVien}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="tenNV">Tên Nhân Viên</label>
+                            <input type="text" class="form-control" id="tenNV" th:field="*{tenNV}" placeholder="Tên nhân viên">
+                        </div>
+                        <div class="form-group">
+                            <label for="CCCD">CCCD</label>
+                            <input type="text" class="form-control" id="CCCD" th:field="*{CCCD}" placeholder="CCCD">
+                        </div>
+                        <div class="form-group">
+                            <label for="ngaySinh">Ngày Sinh</label>
+                            <input type="date" class="form-control" id="ngaySinh" th:field="*{ngaySinh}">
+                        </div>
+                        <div class="form-group">
+                            <label for="hoKhau">Hộ Khẩu</label>
+                            <input type="text" class="form-control" id="hoKhau" th:field="*{hoKhau}" placeholder="Hộ khẩu">
+                        </div>
+                        <div class="form-group">
+                            <label for="SDT">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="SDT" th:field="*{SDT}" placeholder="Số điện thoại">
+                        </div>
+                        <div>
+                            <label for="imageFile">Ảnh:</label>
+                            <input type="file" id="imageFile" name="imageFile">
+                        </div>
+                        <div class="form-group">
+                            <label for="gioiTinh">Giới Tính</label>
+                            <select class="form-control" id="gioiTinh" th:field="*{gioiTinh}">
+                                <option value="NAM">Nam</option>
+                                <option value="NU">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="loaiNhanVien">Loại Nhân Viên</label>
+                            <select class="form-control" id="loaiNhanVien" th:field="*{loaiNhanVien.id}">
+                                <option th:each="loaiNhanVien : ${loaiNhanViens}" th:value="${loaiNhanVien.id}" th:text="${loaiNhanVien.tenLoai}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="phongBan">Phòng Ban</label>
+                            <select class="form-control" id="phongBan" th:field="*{phongBan.id}">
+                                <option th:each="phongBan : ${phongBans}" th:value="${phongBan.id}" th:text="${phongBan.tenPB}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bangCap">Bằng Cấp</label>
+                            <select class="form-control" id="bangCap" th:field="*{bangCap.id}">
+                                <option th:each="bangCap : ${bangCaps}" th:value="${bangCap.id}" th:text="${bangCap.tenBC}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="chucVu">Chức Vụ</label>
+                            <select class="form-control" id="chucVu" th:field="*{chucVu.id}">
+                                <option th:each="chucVu : ${chucVus}" th:value="${chucVu.id}" th:text="${chucVu.tenChucVu}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="chuyenMon">Chuyên Môn</label>
+                            <select class="form-control" id="chuyenMon" th:field="*{chuyenMon.id}">
+                                <option th:each="chuyenMon : ${chuyenMons}" th:value="${chuyenMon.id}" th:text="${chuyenMon.tenCM}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="trangThai">Trạng Thái</label>
+                            <select class="form-control" id="trangThai" th:field="*{trangThai.id}">
+                                <option th:each="trangThai : ${trangThais}" th:value="${trangThai.id}" th:text="${trangThai.tenTT}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="trinhDo">Trình Độ</label>
+                            <select class="form-control" id="trinhDo" th:field="*{trinhDo.id}">
+                                <option th:each="trinhDo : ${trinhDos}" th:value="${trinhDo.id}" th:text="${trinhDo.tenTD}"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

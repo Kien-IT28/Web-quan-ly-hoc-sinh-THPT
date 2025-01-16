@@ -1,0 +1,187 @@
+body{
+    display: block;
+    margin: 0;
+}
+/* Cập nhật CSS cho Box3 */
+#Box3 li {
+    display: inline-block; /* Đặt các phần tử thành hàng ngang */
+    margin-left: 20px; /* Tạo khoảng cách giữa các phần tử */
+}
+
+/* Cập nhật CSS cho icon */
+#Box3 li a i {
+    margin-right: 8px; /* Tạo khoảng cách bên phải cho icon */
+}
+
+/* CSS cho menu ngang */
+nav.nav-container {
+    border-top: 1px #be0422 solid;
+    margin-top: 100px; /* Cách header 100px */
+    background-color: #ffffff; /* Màu nền của menu */
+    margin-left: 300px; /* Cách lề trái*/
+    margin-right: 300px; /* Cách lề phải*/
+}
+
+/* Định dạng cho toàn bộ nav-container */
+.nav-container {
+    background-color: #333; /* Màu nền của menu */
+    overflow: hidden; /* Đảm bảo không có tràn */
+}
+
+/* Định dạng cho các mục trong menu */
+.nav-container ul {
+    list-style-type: none; /* Xóa dấu chấm đầu dòng */
+    margin: 0; /* Xóa lề */
+    padding: 0; /* Xóa khoảng cách bên trong */
+    display: flex; /* Hiển thị các mục trong hàng ngang */
+    justify-content: space-around; /* Khoảng cách đều giữa các mục */
+}
+
+/* Định dạng cho từng liên kết */
+.nav-container ul li {
+    flex: 1; /* Mỗi mục chiếm đều không gian */
+}
+
+/* Định dạng cho các liên kết */
+.nav-container a {
+    display: inline-block; /* Làm cho liên kết chiếm chiều dài của chữ */
+    color: #f10000; /* Màu chữ */
+    text-align: center; /* Canh giữa chữ */
+    padding: 14px; /* Khoảng cách bên trong */
+    text-decoration: none; /* Xóa gạch chân */
+    text-transform: uppercase; /* In hoa toàn bộ chữ */
+    font-family: 'Arial', sans-serif; /* Font chữ đẹp */
+    letter-spacing: 1.5px; /* Tạo khoảng cách giữa các chữ */
+    font-weight: bold; /* In đậm chữ */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Tạo dấu gạch chân dài bằng chữ */
+.nav-container a::after {
+    content: "";
+    display: inline-block;
+    width: 0; /* Bắt đầu ẩn gạch */
+    height: 2px;
+    background-color: #f10000;
+    transition: width 0.3s ease;
+    vertical-align: middle; /* Canh chỉnh gạch */
+    margin-top: 5px; /* Cách chữ một chút */
+}
+
+/* Khi hover, dấu gạch mở rộng theo chiều dài chữ */
+.nav-container a:hover::after {
+    width: 100%; /* Dài bằng chữ */
+}
+
+.nav-container a:hover {
+    color: #528ad2; /* Màu chữ khi hover */
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 600px) {
+    .nav-container ul {
+        flex-direction: column; /* Chuyển sang dạng cột */
+    }
+
+    .nav-container ul li {
+        flex: none; /* Không chiếm không gian đều */
+    }
+}
+
+/* Slider Styles */
+.slider {
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slide Group */
+.slide_group {
+    height: 545px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slide */
+.slide {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover; /* Đảm bảo ảnh phủ đầy slide */
+    background-position: center; /* Căn giữa ảnh */
+}
+
+/* Hiển thị slide đầu tiên */
+.slide:first-child {
+    display: block;
+}
+
+/* Ảnh bên trong slide */
+.slide img {
+    width: 100%;
+    height: 545px;
+    object-fit: cover; /* Đảm bảo ảnh hiển thị đầy đủ */
+}
+
+/* Slide Buttons */
+.slide_buttons {
+    top: 630px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+/* Button Style */
+a.slide_btn {
+    color: #474544;
+    font-size: 42px;
+    margin: 0 0.175em;
+    transition: all 0.4s ease-in-out;
+}
+
+.slide_btn.active, .slide_btn:hover {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Navigation */
+.directional_nav {
+    position: relative;
+    top: -340px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Previous Button */
+.previous_btn, .next_btn {
+    cursor: pointer;
+    height: 65px;
+    width: 65px;
+    opacity: 0.5;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.previous_btn:hover, .next_btn:hover {
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 767px) {
+    .previous_btn {
+        left: 10px;
+    }
+    .next_btn {
+        right: 10px;
+    }
+    .slide_group {
+        height: 300px; /* Điều chỉnh chiều cao trên màn hình nhỏ hơn */
+    }
+    .slide img {
+        height: 300px; /* Chiều cao ảnh trên màn hình nhỏ hơn */
+    }
+}

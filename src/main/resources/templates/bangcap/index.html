@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Quản lý Bằng Cấp</title>
+    <link rel="stylesheet" href="/css/role.css">
+    <!-- Link Icon-->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+    <div class="pagetitle">
+        <h1>Bằng Cấp</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item">Quản lý giáo viên</li>
+                <li class="breadcrumb-item active">Bằng cấp</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Danh Sách Bằng Cấp</h5>
+            <!-- Button thêm bằng cấp modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Thêm Bằng Cấp
+            </button>
+            <!-- Default Table -->
+            <table id="example" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên Bằng Cấp</th>
+                    <th scope="col">Chức năng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bangCap : ${bangCaps}">
+                    <th scope="row" th:text="${bangCap.id}">1</th>
+                    <td th:text="${bangCap.tenBC}">Brandon Jacob</td>
+                    <td>
+                        <!-- Button chỉnh sửa bằng cấp modal -->
+                        <button type="button" class="btn btn-outline-primary editButton" data-bs-toggle="modal" data-bs-target="#EditModal"
+                                th:attr="
+                                        data-id=${bangCap.id},
+                                        data-tenBC=${bangCap.tenBC}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+
+                        <!-- Button xóa bằng cấp -->
+                        <a th:href="@{'/bangcap/delete/' + ${bangCap.id}}"
+                           class="btn btn-outline-danger"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?');">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- End Default Table Example -->
+        </div>
+    </div>
+
+    <!-- Modal thêm bằng cấp -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm Bằng Cấp Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/bangcap}" method="post">
+                        <div class="row mb-3">
+                            <label for="inputTextAdd" class="col-sm-5 col-form-label">Tên Bằng Cấp</label>
+                            <div class="col-sm-15">
+                                <input type="text" id="inputTextAdd" class="form-control" name="tenBC">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chỉnh sửa bằng cấp -->
+    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditModalLabel">Chỉnh Sửa Bằng Cấp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/bangcap/update}" method="post">
+                        <input type="hidden" id="editId" name="id">
+                        <div class="row mb-3">
+                            <label for="inputTextEdit" class="col-sm-5 col-form-label">Tên Bằng Cấp</label>
+                            <div class="col-sm-15">
+                                <input type="text" id="inputTextEdit" class="form-control" name="tenBC">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- JavaScript to handle the Edit button -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButtons = document.querySelectorAll('.editButton');
+        editButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var bangCapId = button.getAttribute('data-id');
+                var bangCapTen = button.getAttribute('data-tenBC');
+
+                // Set the values in the Edit modal
+                document.getElementById('editId').value = bangCapId;
+                document.getElementById('inputTextEdit').value = bangCapTen;
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

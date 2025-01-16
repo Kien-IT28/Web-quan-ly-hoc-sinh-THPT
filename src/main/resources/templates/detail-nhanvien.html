@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Nhân Viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .employee-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-top: -30px;
+        }
+        .employee-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .employee-info dt {
+            font-weight: bold;
+        }
+        .employee-info dd {
+<!--            margin-bottom: 10px;-->
+        }
+
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-11">
+            <div class="employee-card">
+                <h2 class="text-center mb-4">Chi Tiết Nhân Viên</h2>
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img th:src="@{/assets/img/{imageName}(imageName=${nhanVien.image})}" class="img-fluid employee-image" alt="Hình ảnh nhân viên">
+                    </div>
+                    <div class="col-md-8">
+                        <dl class="row employee-info">
+                            <dt class="col-sm-4">ID:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.id}"></dd>
+
+                            <dt class="col-sm-4">Tên Nhân Viên:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.tenNV}"></dd>
+
+                            <dt class="col-sm-4">CCCD:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.CCCD}"></dd>
+
+                            <dt class="col-sm-4">Ngày Sinh:</dt>
+                            <dd class="col-sm-8" th:text="${#dates.format(nhanVien.ngaySinh, 'dd/MM/yyyy')}"></dd>
+
+                            <dt class="col-sm-4">Hộ Khẩu:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.hoKhau}"></dd>
+
+                            <dt class="col-sm-4">Số Điện Thoại:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.SDT}"></dd>
+
+                            <dt class="col-sm-4">Giới Tính:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.gioiTinh}"></dd>
+
+                            <dt class="col-sm-4">Loại Nhân Viên:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.loaiNhanVien.tenLoai}"></dd>
+
+                            <dt class="col-sm-4">Phòng Ban:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.phongBan.tenPB}"></dd>
+
+                            <dt class="col-sm-4">Bằng Cấp:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.bangCap.tenBC}"></dd>
+
+                            <dt class="col-sm-4">Chức Vụ:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.chucVu.tenChucVu}"></dd>
+
+                            <dt class="col-sm-4">Chuyên Môn:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.chuyenMon.tenCM}"></dd>
+
+                            <dt class="col-sm-4">Trạng Thái:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.trangThai.tenTT}"></dd>
+
+                            <dt class="col-sm-4">Trình Độ:</dt>
+                            <dd class="col-sm-8" th:text="${nhanVien.trinhDo.tenTD}"></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

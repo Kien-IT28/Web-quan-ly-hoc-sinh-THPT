@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm giáo viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link Icon-->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Thêm giáo viên</h2>
+        <form action="#" th:action="@{/nhanvien/add}" th:object="${nhanVien}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+                <label for="tenNV">Tên giáo viên</label>
+                <input type="text" class="form-control" id="tenNV" name="tenNV" required>
+            </div>
+            <div class="form-group">
+                <label for="cccd">CCCD</label>
+                <input type="text" class="form-control" id="cccd" name="CCCD" required>
+            </div>
+            <div class="form-group">
+                <label for="ngaySinh">Ngày Sinh</label>
+                <input type="date" class="form-control" id="ngaySinh" name="ngaySinh" required>
+            </div>
+            <div class="form-group">
+                <label for="hoKhau">Hộ Khẩu</label>
+                <input type="text" class="form-control" id="hoKhau" name="hoKhau" required>
+            </div>
+            <div class="form-group">
+                <label for="SDT">Số Điện Thoại</label>
+                <input type="text" class="form-control" id="SDT" name="SDT" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gioiTinh">Giới Tính</label>
+                <select class="form-control" id="gioiTinh" name="gioiTinh">
+                    <option value="NAM">Nam</option>
+                    <option value="NU">Nữ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bangCap">Bằng Cấp</label>
+                <select class="form-control" id="bangCap" name="bangCap.id">
+                    <option th:each="bang : ${bangCaps}" th:value="${bang.id}" th:text="${bang.tenBC}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chucVu">Chức Vụ</label>
+                <select class="form-control" id="chucVu" name="chucVu.id">
+                    <option th:each="chuc : ${chucVus}" th:value="${chuc.id}" th:text="${chuc.tenChucVu}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chuyenMon">Chuyên Môn</label>
+                <select class="form-control" id="chuyenMon" name="chuyenMon.id">
+                    <option th:each="chuyen : ${chuyenMons}" th:value="${chuyen.id}" th:text="${chuyen.tenCM}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="trinhDo">Trình Độ</label>
+                <select class="form-control" id="trinhDo" name="trinhDo.id">
+                    <option th:each="trinh : ${trinhDos}" th:value="${trinh.id}" th:text="${trinh.tenTD}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm giáo viên</button>
+        </form>
+    </div>
+</section>
+<script>
+    const inputImage = document.getElementById('image');
+    const imagePreview = document.getElementById('image-preview');
+
+    inputImage.addEventListener('change', () => {
+      const file = inputImage.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          imagePreview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.innerHTML = '';
+      }
+    });
+</script>
+</body>
+</html>

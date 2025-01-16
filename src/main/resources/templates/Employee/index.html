@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Sự</title>
+    <!-- Link Icon-->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Quản Lý Nhân Sự</h1>
+
+    <!-- Form thêm mới và chỉnh sửa nhân viên -->
+    <form id="nhanVienForm" class="mb-4">
+        <input type="hidden" id="nhanVienId" />
+        <div class="form-group">
+            <label for="tenNV">Tên Nhân Viên</label>
+            <input type="text" class="form-control" id="tenNV" required>
+        </div>
+        <div class="form-group">
+            <label for="cccd">CCCD</label>
+            <input type="text" class="form-control" id="cccd" required>
+        </div>
+        <div class="form-group">
+            <label for="ngaySinh">Ngày Sinh</label>
+            <input type="date" class="form-control" id="ngaySinh" required>
+        </div>
+        <div class="form-group">
+            <label for="hoKhau">Hộ Khẩu</label>
+            <input type="text" class="form-control" id="hoKhau" required>
+        </div>
+        <div class="form-group">
+            <label for="sdt">Số Điện Thoại</label>
+            <input type="text" class="form-control" id="sdt" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Ảnh Đại Diện</label>
+            <input type="text" class="form-control" id="image">
+        </div>
+        <div class="form-group">
+            <label for="gioiTinh">Giới Tính</label>
+            <select class="form-control" id="gioiTinh">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="loaiNhanVien">Loại Nhân Viên</label>
+            <input type="text" class="form-control" id="loaiNhanVien">
+        </div>
+        <div class="form-group">
+            <label for="phongBan">Phòng Ban</label>
+            <input type="text" class="form-control" id="phongBan">
+        </div>
+        <div class="form-group">
+            <label for="bangCap">Bằng Cấp</label>
+            <input type="text" class="form-control" id="bangCap">
+        </div>
+        <div class="form-group">
+            <label for="chucVu">Chức Vụ</label>
+            <input type="text" class="form-control" id="chucVu">
+        </div>
+        <div class="form-group">
+            <label for="chuyenMon">Chuyên Môn</label>
+            <input type="text" class="form-control" id="chuyenMon">
+        </div>
+        <div class="form-group">
+            <label for="trangThai">Trạng Thái</label>
+            <input type="text" class="form-control" id="trangThai">
+        </div>
+        <div class="form-group">
+            <label for="trinhDo">Trình Độ</label>
+            <input type="text" class="form-control" id="trinhDo">
+        </div>
+        <!-- Thêm các trường khác ở đây -->
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <button type="button" id="cancelBtn" class="btn btn-secondary">Hủy</button>
+    </form>
+
+    <!-- Bảng hiển thị danh sách nhân viên -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Nhân Viên</th>
+            <th>CCCD</th>
+            <th>Ngày Sinh</th>
+            <th>Hộ Khẩu</th>
+            <th>Số Điện Thoại</th>
+            <th>Ảnh Đại Diện</th>
+            <th>Giới Tính</th>
+            <th>Loại Nhân Viên</th>
+            <th>Phòng Ban</th>
+            <th>Bằng Cấp</th>
+            <th>Chức Vụ</th>
+            <th>Chuyên Môn</th>
+            <th>Trạng Thái</th>
+            <th>Trình Độ</th>
+            <!-- Thêm các cột khác ở đây -->
+            <th>Hành Động</th>
+        </tr>
+        </thead>
+        <tbody id="nhanVienTableBody">
+        <!-- Dữ liệu sẽ được thêm vào đây bằng jQuery -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Load danh sách nhân viên
+        function loadNhanViens() {
+            $.get("/api/nhanviens", function(data) {
+                $('#nhanVienTableBody').empty();
+                data.forEach(function(nhanVien) {
+                    $('#nhanVienTableBody').append(`
+                        <tr>
+                            <td>${nhanVien.id}</td>
+                            <td>${nhanVien.tenNV}</td>
+                            <td>${nhanVien.cccd}</td>
+                            <td>${nhanVien.ngaySinh}</td>
+                            <td>${nhanVien.hoKhau}</td>
+                            <td>${nhanVien.sdt}</td>
+                            <td>${nhanVien.image}</td>
+                            <td>${nhanVien.gioiTinh}</td>
+                            <td>${nhanVien.loaiNhanVien}</td>
+                            <td>${nhanVien.phongBan}</td>
+                            <td>${nhanVien.bangCap}</td>
+                            <td>${nhanVien.chucVu}</td>
+                            <td>${nhanVien.chuyenMon}</td>
+                            <td>${nhanVien.trangThai}</td>
+                            <td>${nhanVien.trinhDo}</td>
+                            <!-- Thêm các cột khác ở đây -->
+                            <td>
+                                <button class="btn btn-warning btn-edit" data-id="${nhanVien.id}">Sửa</button>
+                                <button class="btn btn-danger btn-delete" data-id="${nhanVien.id}">Xóa</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        loadNhanViens();
+
+        // Thêm hoặc cập nhật nhân viên
+        $('#nhanVienForm').submit(function(e) {
+            e.preventDefault();
+            let nhanVienId = $('#nhanVienId').val();
+            let url = '/api/nhanviens';
+            let method = 'POST';
+            if (nhanVienId) {
+                url += '/' + nhanVienId;
+                method = 'PUT';
+            }
+
+            let nhanVienData = {
+                tenNV: $('#tenNV').val(),
+                cccd: $('#cccd').val(),
+                ngaySinh: $('#ngaySinh').val(),
+                hoKhau: $('#hoKhau').val(),
+                sdt: $('#sdt').val(),
+                image: $('#image').val(),
+                gioiTinh: $('#gioiTinh').val(),
+                loaiNhanVien: $('#loaiNhanVien').val(),
+                phongBan: $('#phongBan').val(),
+                bangCap: $('#bangCap').val(),
+                chucVu: $('#chucVu').val(),
+                chuyenMon: $('#chuyenMon').val(),
+                trangThai: $('#trangThai').val(),
+                trinhDo: $('#trinhDo').val()
+                // Thêm các trường khác ở đây
+            };
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: 'application/json',
+                data: JSON.stringify(nhanVienData),
+                success: function() {
+                    $('#nhanVienForm')[0].reset();
+                    $('#nhanVienId').val('');
+                    loadNhanViens();
+                }
+            });
+        });
+
+        // Sửa nhân viên
+        $(document).on('click', '.btn-edit', function() {
+            let nhanVienId = $(this).data('id');
+            $.get('/api/nhanviens/' + nhanVienId, function(data) {
+                $('#nhanVienId').val(data.id);
+                $('#tenNV').val(data.tenNV);
+                $('#cccd').val(data.cccd);
+                $('#ngaySinh').val(data.ngaySinh);
+                $('#hoKhau').val(data.hoKhau);
+                $('#sdt').val(data.sdt);
+                $('#image').val(data.image);
+                $('#gioiTinh').val(data.gioiTinh);
+                $('#loaiNhanVien').val(data.loaiNhanVien);
+                $('#phongBan').val(data.phongBan);
+                $('#bangCap').val(data.bangCap);
+                $('#chucVu').val(data.chucVu);
+                $('#chuyenMon').val(data.chuyenMon);
+                $('#trangThai').val(data.trangThai);
+                $('#trinhDo').val(data.trinhDo);
+                // Thêm các trường khác ở đây
+            });
+        });
+
+        // Xóa nhân viên
+        $(document).on('click', '.btn-delete', function() {
+            let nhanVienId = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xóa nhân viên này không?')) {
+                $.ajax({
+                    url: '/api/nhanviens/' + nhanVienId,
+                    method: 'DELETE',
+                    success: function() {
+                        loadNhanViens();
+                    }
+                });
+            }
+        });
+
+        // Hủy bỏ form
+        $('#cancelBtn').click(function() {
+            $('#nhanVienForm')[0].reset();
+            $('#nhanVienId').val('');
+        });
+    });
+</script>
+</body>
+</html>
