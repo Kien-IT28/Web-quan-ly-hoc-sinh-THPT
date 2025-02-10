@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +59,12 @@ public class Account implements UserDetails{
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "IDAccount"),inverseJoinColumns = @JoinColumn(name = "IDRole"))
     private Set<Role> roles = new HashSet<>();
+
+    // Trường lưu mã OTP
+    private String otp;
+
+    // Thời gian hết hạn của OTP
+    private LocalDateTime otpExpirationTime;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

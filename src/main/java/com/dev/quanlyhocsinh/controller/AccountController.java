@@ -3,7 +3,9 @@ package com.dev.quanlyhocsinh.controller;
 
 import com.dev.quanlyhocsinh.model.Account;
 import com.dev.quanlyhocsinh.model.Role;
+import com.dev.quanlyhocsinh.repository.AccountRepository;
 import com.dev.quanlyhocsinh.service.AccountService;
+import com.dev.quanlyhocsinh.service.EmailService;
 import com.dev.quanlyhocsinh.service.RoleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,6 +31,9 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private AccountRepository accountRepository;
+
 
     @GetMapping("/edit")
     public String editAccount(@AuthenticationPrincipal UserDetails userDetails, Model model){

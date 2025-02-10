@@ -44,7 +44,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/assets/**","/css/**", "/js/**","/vendor/**","/oauth/**", "/error","/Anh/**",
-                                "/images/**", "/index", "/gioithieu", "/tuyensinh", "/thongbao", "/forgot-password").permitAll()
+                                "/images/**", "/index", "/gioithieu", "/tuyensinh", "/thongbao", "/forgot-password", "/reset-password").permitAll()
                         .requestMatchers("/account/phanquyen").hasAnyAuthority("ADMIN") // Chỉ cho phép ADMIN truy cập.
                         .requestMatchers("/phongban", "/chucvu", "/chuyenmon", "/congtac", "/trinhdo", "/nhanvien", "/nhomnhanvien", "/chitietnhomnhanvien",
                                 "/thongke", "/hocsinh","/account-teacher")

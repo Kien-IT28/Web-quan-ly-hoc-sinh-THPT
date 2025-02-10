@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,8 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
 
     final AccountRepository accountRepository;
-
     final RoleRepository roleRepository;
+    final EmailService emailService;
 
     public void save(@NotNull Account account) {
         account.setPassword(new BCryptPasswordEncoder().encode(account.getPassword()));
@@ -91,5 +92,58 @@ public class AccountService implements UserDetailsService {
 
     public long countAccounts(){
         return accountRepository.count();
+    }
+
+    // Quen mat khau
+    public String forgotPassword(String email) {
+        Account account = accountRepository.findByEmail(email);
+
+        if (account == null) {
+            return "Email không tồn tại!";
+        }
+
+        // Tạo mã OTP (6 chữ số ngẫu nhiên)
+        String otp = String.format("%06d", (int) (Math.random() * 1000000));
+
+        // Thiết lập thời gian hết hạn (ví dụ: 5 phút từ hiện tại)
+        LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(5);
+
+        account.setOtp(otp);
+        account.setOtpExpirationTime(expirationTime);
+        accountRepository.save(account); // Lưu thông tin OTP vào cơ sở dữ liệu
+
+        // Gửi email với mã OTP
+        emailService.sendSimpleEmail(account.getEmail(), "Mã OTP để đổi mật khẩu",
+                "Mã OTP của bạn là: " + otp + ". Mã này sẽ hết hạn sau 5 phút.");
+
+        return "Đã gửi mã OTP tới email của bạn!";
+    }
+
+    public String resetPassword(String email, String otp, String newPassword) {
+        Account account = accountRepository.findByEmail(email);
+
+        if (account == null) {
+            return "Email không tồn tại!";
+        }
+
+        // Kiểm tra mã OTP
+        if (!otp.equals(account.getOtp())) {
+            return "Mã OTP không chính xác!";
+        }
+
+        // Kiểm tra thời gian hết hạn
+        if (account.getOtpExpirationTime().isBefore(LocalDateTime.now())) {
+            return "Mã OTP đã hết hạn!";
+        }
+        // Create a new instance of BCryptPasswordEncoder
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        // Đổi mật khẩu
+        account.setPassword(passwordEncoder.encode(newPassword));
+        account.setOtp(null); // Xóa OTP sau khi sử dụng
+        account.setOtpExpirationTime(null); // Xóa thời gian hết hạn OTP
+        accountRepository.save(account);
+
+        return "Đổi mật khẩu thành công!";
     }
 }
